@@ -246,7 +246,7 @@
         if (user) {
             localStorage.setItem('azoomLoggedInUser', JSON.stringify({ name: user.name, email: user.email }));
             alert(`Welcome, ${user.name}!`);
-            window.location.href = 'AZoom Rental.html';
+            window.location.href = 'index.html';
         } else {
             alert('Invalid email or password.');
         }
@@ -291,7 +291,7 @@
 
     function handleLogout() {
         localStorage.removeItem('azoomLoggedInUser');
-        window.location.href = 'AZoom Rental.html';
+        window.location.href = 'index.html';
     }
 
     function showRegister() {
@@ -309,3 +309,4 @@
 
 
 </html>
+
