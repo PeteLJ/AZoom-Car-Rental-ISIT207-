@@ -166,7 +166,6 @@ body {
 #authNav {
     display: flex;
     align-items: center;
-    margin-top: 0;
 }
 
 /* Hide by default */
@@ -649,4 +648,5 @@ body {
         line-height: 60px;
         font-size: 2rem;
     }
+
 }
