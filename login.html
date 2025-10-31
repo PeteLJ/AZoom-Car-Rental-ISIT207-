@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login - AZoom Car Rental</title>
+    <link rel="stylesheet" href="styleAZoom.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <style>
+        /* Additional styles specific to login page */
+        .back-to-home {
+            position: absolute;
+            top: 15px;
+            left: 15px;
+            color: #1a3a6c;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            padding: 6px 12px;
+            border-radius: 16px;
+            background-color: rgba(255, 255, 255, 0.85);
+            box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.25s ease;
+            z-index: 10;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .back-to-home:hover {
+            color: #2ecc71;
+            background-color: white;
+            transform: translateX(-2px);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .auth-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background-color: #f0f7ff;
+            padding: 20px;
+        }
+
+        .auth-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            padding: 40px 30px;
+            position: relative;
+            /* ← ADD THIS */
+            text-align: center;
+        }
+
+        .auth-logo {
+            margin-bottom: 25px;
+        }
+
+        .auth-logo img {
+            height: 60px;
+        }
+
+        .auth-title {
+            font-size: 1.8rem;
+            color: #1a3a6c;
+            margin-bottom: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+            text-align: left;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #333;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            font-size: 1rem;
+            transition: border 0.3s;
+        }
+
+        .form-group input:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+
+        .auth-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .toggle-link {
+            color: #3498db;
+            text-decoration: none;
+            font-weight: 500;
+            margin-top: 15px;
+            display: inline-block;
+        }
+
+        .toggle-link:hover {
+            text-decoration: underline;
+        }
+
+        .message {
+            padding: 12px;
+            margin: 15px 0;
+            border-radius: 8px;
+            font-weight: 500;
+        }
+
+        .message.success {
+            background-color: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+
+        .message.error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="auth-container">
+        <div class="auth-card">
+            <!-- Already Logged In Banner -->
+            <div id="alreadyLoggedInSection" class="hidden">
+                <div class="message success" style="margin-bottom: 20px; margin-top: 30px; padding: 15px; font-size: 1.1rem;">
+                    You are already logged in as <strong><span id="alreadyLoggedInName"></span></strong>!
+                </div>
+                <button class="btn-secondary" onclick="handleLogout()" style="margin-bottom: 15px;">Logout</button>
+            </div>
+            <!-- Back to Home Button -->
+            <a href="AZoom Rental.html" class="back-to-home">← Back to Home</a>
+            <div class="auth-logo">
+                <img src="azoom-logo.png" alt="AZoom Logo" />
+            </div>
+
+            <!-- Login Form -->
+            <div id="loginForm" class="hidden">
+                <h2 class="auth-title">Login to Your Account</h2>
+                <div id="loginMessage" class="hidden"></div>
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" placeholder="you@example.com" />
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" placeholder="••••••••" />
+                </div>
+                <div class="auth-buttons">
+                    <button class="btn-primary" onclick="handleLogin()">Login</button>
+                </div>
+                <a href="#" class="toggle-link" onclick="showRegister()">Don’t have an account? Register</a>
+            </div>
+
+            <!-- Register Form -->
+            <div id="registerForm" class="hidden">
+                <h2 class="auth-title">Create an Account</h2>
+                <div id="registerMessage" class="hidden"></div>
+                <div class="form-group">
+                    <label for="registerName">Full Name</label>
+                    <input type="text" id="registerName" placeholder="John Tan" />
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">Email</label>
+                    <input type="email" id="registerEmail" placeholder="you@example.com" />
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Password</label>
+                    <input type="password" id="registerPassword" placeholder="••••••••" />
+                </div>
+                <div class="form-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <input type="password" id="confirmPassword" placeholder="••••••••" />
+                </div>
+                <div class="auth-buttons">
+                    <button class="btn-primary" onclick="handleRegister()">Register</button>
+                </div>
+                <a href="#" class="toggle-link" onclick="showLogin()">Already have an account? Login</a>
+            </div>
+
+            <!-- Logout Section (shown after login) -->
+            <div id="logoutSection" class="hidden">
+                <div class="message success">You are logged in!</div>
+                <p>Welcome, <span id="loggedInUser"></span>!</p>
+                <button class="btn-secondary" onclick="handleLogout()">Logout</button>
+                <a href="AZoom Rental.html" class="toggle-link" style="margin-top: 20px;">← Back to Homepage</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    // Immediately check login state before DOM fully loads
+    document.addEventListener('DOMContentLoaded', () => {
+        const user = localStorage.getItem('azoomLoggedInUser');
+        const alreadyLoggedInSection = document.getElementById('alreadyLoggedInSection');
+        const loginForm = document.getElementById('loginForm');
+        const registerForm = document.getElementById('registerForm');
+        const nameSpan = document.getElementById('alreadyLoggedInName');
+
+        if (user) {
+            const userData = JSON.parse(user);
+            nameSpan.textContent = userData.name;
+            alreadyLoggedInSection.classList.remove('hidden');
+            // loginForm and registerForm stay hidden
+        } else {
+            // Only show login form if not logged in
+            loginForm.classList.remove('hidden');
+        }
+    });
+
+    // Keep your existing functions below
+    function handleLogin() {
+        const email = document.getElementById('loginEmail').value.trim();
+        const password = document.getElementById('loginPassword').value;
+        if (!email || !password) {
+            alert('Please fill in all fields.');
+            return;
+        }
+        const users = JSON.parse(localStorage.getItem('azoomUsers') || '[]');
+        const user = users.find(u => u.email === email && u.password === password);
+        if (user) {
+            localStorage.setItem('azoomLoggedInUser', JSON.stringify({ name: user.name, email: user.email }));
+            alert(`Welcome, ${user.name}!`);
+            window.location.href = 'AZoom Rental.html';
+        } else {
+            alert('Invalid email or password.');
+        }
+    }
+
+    function handleRegister() {
+        const name = document.getElementById('registerName').value.trim();
+        const email = document.getElementById('registerEmail').value.trim();
+        const pass = document.getElementById('registerPassword').value;
+        const confirm = document.getElementById('confirmPassword').value;
+
+        if (!name || !email || !pass || !confirm) {
+            alert('All fields are required.');
+            return;
+        }
+        if (pass !== confirm) {
+            alert('Passwords do not match.');
+            return;
+        }
+        if (pass.length < 6) {
+            alert('Password must be at least 6 characters.');
+            return;
+        }
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            alert('Invalid email format.');
+            return;
+        }
+
+        const users = JSON.parse(localStorage.getItem('azoomUsers') || '[]');
+        if (users.some(u => u.email === email)) {
+            alert('Email already registered.');
+            return;
+        }
+
+        users.push({ name, email, password: pass });
+        localStorage.setItem('azoomUsers', JSON.stringify(users));
+        alert('Account created! Please log in.');
+        document.getElementById('loginForm').classList.remove('hidden');
+        document.getElementById('registerForm').classList.add('hidden');
+    }
+
+    function handleLogout() {
+        localStorage.removeItem('azoomLoggedInUser');
+        window.location.href = 'AZoom Rental.html';
+    }
+
+    function showRegister() {
+        document.getElementById('loginForm').classList.add('hidden');
+        document.getElementById('registerForm').classList.remove('hidden');
+    }
+
+    function showLogin() {
+        document.getElementById('registerForm').classList.add('hidden');
+        document.getElementById('loginForm').classList.remove('hidden');
+    }
+</script>
+
+</body>
+
+</html>

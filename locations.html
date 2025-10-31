@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Locations - AZoom Car Rental</title>
+    <link rel="stylesheet" href="styleAZoom.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <style>
+        .locations-header {
+            text-align: center;
+            padding: 60px 0 40px;
+            background-color: #f0f7ff;
+            margin-top: 3%;
+        }
+
+        .locations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .location-card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s;
+        }
+
+        .location-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .location-type {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background: linear-gradient(90deg, #2ecc71, #3498db);
+            opacity: 0.8;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+            margin-top: 25px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+        }
+
+        .type-hq {
+            background: #e3f2fd;
+            color: #1565c0;
+        }
+
+        .type-outlet {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .location-name {
+            font-size: 1.5rem;
+            color: #1a3a6c;
+            margin-bottom: 15px;
+        }
+
+        .location-detail {
+            margin: 8px 0;
+            font-size: 0.95rem;
+            display: flex;
+            align-items: flex-start;
+        }
+
+        .detail-icon {
+            margin-right: 10px;
+            color: #2ecc71;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="azoom-logo.png" alt="AZoom Logo" />
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="AZoom Rental.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="our-fleet.html" class="nav-link">Our Fleet</a></li>
+                <li class="nav-item"><a href="charging-stations.html" class="nav-link">Charging Stations</a></li>
+                <li class="nav-item"><a href="locations.html" class="nav-link active">Locations</a></li>
+                <li class="nav-item"><a href="about.html" class="nav-link">About Us</a></li>
+                <li class="nav-item"><a href="login.html" class="nav-link login-btn">Login</a></li>
+                <!-- Auth Section -->
+                <li class="nav-item" id="authNav"><a href="myreservations.html" class="nav-link">My Reservations</a>
+                </li>
+                <li><span id="greeting" class="nav-greeting"></span>
+                    <a href="#" id="logoutBtn" class="nav-link logout-btn">Logout</a>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <section class="locations-header">
+        <div class="container">
+            <h1 class="section-title">Our Locations</h1>
+            <p style="font-size: 1.2rem; max-width: 700px; margin: 0 auto; opacity: 0.9;">
+                Visit any of our 3 convenient outlets or our headquarters in Singapore for car collection, return, or
+                customer support.
+            </p>
+        </div>
+    </section>
+
+    <!-- Locations Grid -->
+    <section class="container">
+        <div class="locations-grid">
+            <!-- HQ -->
+            <div class="location-card">
+                <span class="location-type type-hq">Headquarters</span>
+                <h3 class="location-name">AZoom HQ</h3>
+                <div class="location-detail">
+                    <span class="detail-icon">🏠</span>
+                    <span>17 Eco Drive, Singapore 076852</span>
+                </div>
+                <div class="location-detail">
+                    <span class="detail-icon">🕒</span>
+                    <span>Mon–Fri: 8:00 AM – 8:00 PM<br>Sat–Sun: 9:00 AM – 6:00 PM</span>
+                </div>
+                <div class="location-detail">
+                    <span class="detail-icon">📞</span>
+                    <span>+65 6123 4567</span>
+                </div>
+            </div>
+
+            <!-- Outlet 1 -->
+            <div class="location-card">
+                <span class="location-type type-outlet">Rental Outlet</span>
+                <h3 class="location-name">International Business Park</h3>
+                <div class="location-detail">
+                    <span class="detail-icon">🏠</span>
+                    <span>31 International Business Park, #07-13, Singapore 609921</span>
+                </div>
+                <div class="location-detail">
+                    <span class="detail-icon">🕒</span>
+                    <span>Daily: 9:00 AM – 9:00 PM</span>
+                </div>
+                <div class="location-detail">
+                    <span class="detail-icon">📞</span>
+                    <span>+65 6234 5678</span>
+                </div>
+            </div>
+
+            <!-- Outlet 2 -->
+            <div class="location-card">
+                <span class="location-type type-outlet">Rental Outlet</span>
+                <h3 class="location-name">WCEGA Plaza</h3>
+                <div class="location-detail">
+                    <span class="detail-icon">🏠</span>
+                    <span>1 Bukit Batok Cres, #01-09, Singapore 658064</span>
+                </div>
+                <div class="location-detail">
+                    <span class="detail-icon">🕒</span>
+                    <span>Daily: 9:00 AM – 9:00 PM</span>
+                </div>
+                <div class="location-detail">
+                    <span class="detail-icon">📞</span>
+                    <span>+65 6345 6789</span>
+                </div>
+            </div>
+
+            <!-- Outlet 3 -->
+            <div class="location-card">
+                <span class="location-type type-outlet">Rental Outlet</span>
+                <h3 class="location-name">Changi Business Park</h3>
+                <div class="location-detail">
+                    <span class="detail-icon">🏠</span>
+                    <span>51 Changi Business Park Central 2, #04-22, Singapore 486066</span>
+                </div>
+                <div class="location-detail">
+                    <span class="detail-icon">🕒</span>
+                    <span>Daily: 9:00 AM – 9:00 PM</span>
+                </div>
+                <div class="location-detail">
+                    <span class="detail-icon">📞</span>
+                    <span>+65 6456 7890</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section" style="text-align: center; padding: 60px 0; background: #f8f9fa; margin-top: 50px;">
+        <div class="container">
+            <h2>Ready to Rent?</h2>
+            <p>Reserve your vehicle online and pick it up at any of our convenient locations.</p>
+            <a href="our-fleet.html" class="btn-primary">Explore Our Fleet</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="azoom-logo.png" alt="AZoom Logo" />
+                    <p>Singapore's premier electric vehicle rental service</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="AZoom Rental.html">Home</a></li>
+                        <li><a href="our-fleet.html">Our Fleet</a></li>
+                        <li><a href="charging-stations.html">Charging Stations</a></li>
+                        <li><a href="locations.html">Locations</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <p>📞 +65 6123 4567</p>
+                    <p>✉️ info@azoom.com.sg</p>
+                    <p>📍 17 Eco Drive, Singapore 076852</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 AZoom Car Rental. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="scriptAZoom.js"></script>
+
+    <script>
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function () {
+            updateAuthNav();
+            setupLogoutHandler();
+        });
+    </script>
+</body>
+
+</html>

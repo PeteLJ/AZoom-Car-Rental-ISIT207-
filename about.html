@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>About Us - AZoom Car Rental</title>
+    <link rel="stylesheet" href="styleAZoom.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <style>
+        .about-header {
+            text-align: center;
+            padding: 60px 0 40px;
+            margin-top: 3%;
+            background-color: #f0f7ff;
+        }
+
+        .about-content {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            margin: 50px 0;
+        }
+
+        .about-section h2 {
+            font-size: 1.8rem;
+            color: #1a3a6c;
+            margin-bottom: 20px;
+        }
+
+        .about-section p {
+            margin-bottom: 15px;
+            line-height: 1.7;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background: linear-gradient(90deg, #2ecc71, #3498db);
+            opacity: 0.8;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+            margin-top: 25px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+        }
+
+        .values-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+
+        .value-card {
+            background: #f8f9fa;
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .value-icon {
+            font-size: 2rem;
+            margin-bottom: 15px;
+            color: #2ecc71;
+        }
+
+        .team-image-container {
+            width: 100%;
+            max-width: 900px;
+            height: 400px;
+            margin: 40px auto 50px;
+            overflow: hidden;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
+        }
+
+        .team-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+            display: block;
+        }
+
+        .cta-section {
+            text-align: center;
+            padding: 60px 0;
+            background: #f8f9fa;
+            margin-top: 50px;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="azoom-logo.png" alt="AZoom Logo" />
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="AZoom Rental.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="our-fleet.html" class="nav-link">Our Fleet</a></li>
+                <li class="nav-item"><a href="charging-stations.html" class="nav-link">Charging Stations</a></li>
+                <li class="nav-item"><a href="locations.html" class="nav-link">Locations</a></li>
+                <li class="nav-item"><a href="about.html" class="nav-link active">About Us</a></li>
+                <li class="nav-item"><a href="login.html" class="nav-link login-btn">Login</a></li>
+                <!-- Auth Section -->
+                <li class="nav-item" id="authNav"><a href="myreservations.html" class="nav-link">My Reservations</a>
+                </li>
+                <li><span id="greeting" class="nav-greeting"></span>
+                    <a href="#" id="logoutBtn" class="nav-link logout-btn">Logout</a>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <section class="about-header">
+        <div class="container">
+            <h1 class="section-title">About AZoom</h1>
+            <p style="font-size: 1.2rem; max-width: 700px; margin: 0 auto; opacity: 0.9;">
+                Pioneering sustainable mobility in Singapore with affordable, premium electric vehicle rentals.
+            </p>
+        </div>
+    </section>
+
+    <!-- About Content -->
+    <section class="container">
+        <div class="team-image-container">
+            <img src="./AZoom_employees.png" alt="AZoom Team" class="team-image">
+        </div>
+        <div class="about-content">
+            <div class="about-section">
+                <h2>Our Mission</h2>
+                <p>
+                    AZoom was founded in 2023 with a simple goal: to make electric vehicle rental accessible,
+                    affordable, and convenient for everyone in Singapore.
+                </p>
+                <p>
+                    We believe that sustainable transportation is key to a greener future. By offering a curated fleet
+                    the latest EVs, primarily from innovative Chinese brands like BYD, XPENG, ZEEKR and more! We empower
+                    drivers to reduce their carbon footprint without compromising on performance or style.
+                </p>
+            </div>
+            <div class="about-section">
+                <h2>Why Choose AZoom?</h2>
+                <p>
+                    Unlike traditional car rental companies, we specialize exclusively in eco-friendly vehicles. Our EVs
+                    are up to <strong>30% cheaper</strong> to rent than gasoline cars, thanks to lower maintenance and
+                    energy costs.
+                </p>
+                <p>
+                    With two convenient locations across Singapore and partnerships with 12+ charging stations
+                    island-wide, we ensure a seamless experience from booking to return.
+                </p>
+            </div>
+        </div>
+
+        <!-- Our Values -->
+        <div class="about-section">
+            <h2>Our Core Values</h2>
+            <div class="values-grid">
+                <div class="value-card">
+                    <div class="value-icon">🌱</div>
+                    <h3>Sustainability</h3>
+                    <p>Zero-emission transport for a cleaner Singapore.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">⚡</div>
+                    <h3>Innovation</h3>
+                    <p>Latest EV tech from global leaders.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🤝</div>
+                    <h3>Customer Care</h3>
+                    <p>Hassle-free booking, pickup, and support.</p>
+                </div>
+                <div class="value-card">
+                    <div class="value-icon">🇸🇬</div>
+                    <h3>Local Commitment</h3>
+                    <p>Proudly serving Singaporeans and visitors alike.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Vision -->
+        <div class="about-section" style="margin-top: 50px;">
+            <h2>Our Vision</h2>
+            <p>
+                To become Singapore’s most trusted and widely used EV rental service by 2030, contributing to the
+                nation’s Green Plan 2030 and helping reduce urban emissions.
+            </p>
+            <p>
+                We’re not just renting cars — we’re driving change.
+            </p>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Join the EV Revolution</h2>
+            <p>Experience the future of driving today with AZoom.</p>
+            <a href="our-fleet.html" class="btn-primary">Explore Our Fleet</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="azoom-logo.png" alt="AZoom Logo" />
+                    <p>Singapore's premier electric vehicle rental service</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="AZoom Rental.html">Home</a></li>
+                        <li><a href="our-fleet.html">Our Fleet</a></li>
+                        <li><a href="charging-stations.html">Charging Stations</a></li>
+                        <li><a href="locations.html">Locations</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <p>📞 +65 6123 4567</p>
+                    <p>✉️ info@azoom.com.sg</p>
+                    <p>📍 17 Eco Drive, Singapore 076852</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 AZoom Car Rental. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="scriptAZoom.js"></script>
+    <script>
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function () {
+            updateAuthNav();
+            setupLogoutHandler();
+        });
+    </script>
+</body>
+
+</html>

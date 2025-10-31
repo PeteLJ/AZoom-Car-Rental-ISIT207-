@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>EV Charging Stations - AZoom Car Rental</title>
+    <link rel="stylesheet" href="styleAZoom.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <style>
+        .stations-header {
+            text-align: center;
+            padding: 60px 0 40px;
+            margin-top: 3%;
+            background-color: #f0f7ff;
+        }
+
+        .btn-primary {
+            display: inline-block;
+            background: linear-gradient(90deg, #2ecc71, #3498db);
+            opacity: 0.8;
+            color: white;
+            padding: 12px 25px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+            margin-top: 25px;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+        }
+
+        .filter-section {
+            text-align: center;
+            margin: 20px 0 40px;
+        }
+
+        .filter-btn {
+            padding: 8px 20px;
+            margin: 0 8px 10px;
+            border: 2px solid #2ecc71;
+            background: white;
+            color: #1a3a6c;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .filter-btn.active,
+        .filter-btn:hover {
+            background: linear-gradient(90deg, #2ecc71, #3498db);
+            color: white;
+        }
+
+        .stations-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 20px;
+        }
+
+        .station-card {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s;
+        }
+
+        .station-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .station-name {
+            font-size: 1.4rem;
+            color: #1a3a6c;
+            margin-bottom: 10px;
+        }
+
+        .station-cost {
+            background: #e8f5e9;
+            color: #2e7d32;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-weight: 600;
+            display: inline-block;
+            margin-bottom: 15px;
+        }
+
+        .station-detail {
+            display: flex;
+            margin: 8px 0;
+            font-size: 0.95rem;
+        }
+
+        .detail-label {
+            font-weight: 600;
+            min-width: 120px;
+            color: #1a3a6c;
+        }
+
+        .availability {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+        }
+
+        .available {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .busy {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .cta-section {
+            text-align: center;
+            padding: 60px 0;
+            background: #f8f9fa;
+            margin-top: 50px;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="azoom-logo.png" alt="AZoom Logo" />
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="AZoom Rental.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="our-fleet.html" class="nav-link">Our Fleet</a></li>
+                <li class="nav-item"><a href="charging-stations.html" class="nav-link">Charging Stations</a></li>
+                <li class="nav-item"><a href="locations.html" class="nav-link">Locations</a></li>
+                <li class="nav-item"><a href="about.html" class="nav-link">About Us</a></li>
+                <li class="nav-item"><a href="login.html" class="nav-link login-btn">Login</a></li>
+                <!-- Auth Section -->
+                <li class="nav-item" id="authNav"><a href="myreservations.html" class="nav-link">My Reservations</a>
+                </li>
+                <li><span id="greeting" class="nav-greeting"></span>
+                    <a href="#" id="logoutBtn" class="nav-link logout-btn">Logout</a>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Header -->
+    <section class="stations-header">
+        <div class="container">
+            <h1 class="section-title">EV Charging Stations</h1>
+            <p style="font-size: 1.2rem; max-width: 700px; margin: 0 auto; opacity: 0.9;">
+                Affordable and convenient charging from 12 stations across Singapore. All stations support CCS2 and Type 2 connectors.
+            </p>
+        </div>
+    </section>
+
+    <!-- Filter Section -->
+    <div class="container">
+        <div class="filter-section">
+            <button class="filter-btn active" data-filter="all">All Stations</button>
+            <button class="filter-btn" data-filter="low">Low (≤S$0.50)</button>
+            <button class="filter-btn" data-filter="medium">Medium (S$0.51–0.59)</button>
+            <button class="filter-btn" data-filter="high">High (≥S$0.60)</button>
+        </div>
+
+        <!-- Stations Grid -->
+        <div class="stations-grid" id="stationsGrid">
+        </div>
+    </div>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="container">
+            <h2>Ready to Hit the Road?</h2>
+            <p>Rent an EV from AZoom and enjoy seamless charging across Singapore.</p>
+            <a href="our-fleet.html" class="btn-primary">Explore Our EV Fleet</a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="azoom-logo.png" alt="AZoom Logo" />
+                    <p>Singapore's premier electric vehicle rental service</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="AZoom Rental.html">Home</a></li>
+                        <li><a href="our-fleet.html">Our Fleet</a></li>
+                        <li><a href="charging-stations.html">Charging Stations</a></li>
+                        <li><a href="locations.html">Locations</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <p>📞 +65 6123 4567</p>
+                    <p>✉️ info@azoom.com.sg</p>
+                    <p>📍 17 Eco Drive, Singapore 076852</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 AZoom Car Rental. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="scriptAZoom.js"></script>
+    <script>
+        // Charging station data
+        const stations = [
+            { name: "Orchard Road Hub", cost: 0.55, address: "313 Orchard Rd", chargers: "6 (4 DC, 2 AC)", hours: "24/7" },
+            { name: "Marina Bay Financial Centre", cost: 0.60, address: "10 Marina Blvd", chargers: "8 (6 DC, 2 AC)", hours: "6am–12am" },
+            { name: "Jurong East Mall", cost: 0.48, address: "1 Jurong East Central 2", chargers: "4 (2 DC, 2 AC)", hours: "10am–10pm" },
+            { name: "Tampines Mall", cost: 0.50, address: "4 Tampines Central 5", chargers: "5 (3 DC, 2 AC)", hours: "24/7" },
+            { name: "Woodlands Civic Centre", cost: 0.45, address: "900 Woodlands Ave 9", chargers: "3 (2 DC, 1 AC)", hours: "8am–10pm" },
+            { name: "Paya Lebar Quarter", cost: 0.58, address: "180 Paya Lebar Rd", chargers: "6 (4 DC, 2 AC)", hours: "24/7" },
+            { name: "Bishan Mall", cost: 0.52, address: "5 Bishan Place", chargers: "4 (2 DC, 2 AC)", hours: "9am–11pm" },
+            { name: "Changi City Point", cost: 0.62, address: "5 Changi Business Park", chargers: "6 (4 DC, 2 AC)", hours: "24/7" },
+            { name: "Queenstown Mall", cost: 0.49, address: "1 Margaret Dr", chargers: "3 (2 DC, 1 AC)", hours: "10am–10pm" },
+            { name: "Toa Payoh Hub", cost: 0.54, address: "290 Lorong 6 Toa Payoh", chargers: "4 (3 DC, 1 AC)", hours: "8am–11pm" },
+            { name: "Sengkang Grand Mall", cost: 0.51, address: "1 Sengkang Square", chargers: "5 (3 DC, 2 AC)", hours: "10am–10pm" },
+            { name: "Junction 8", cost: 0.57, address: "9 Bishan Pl", chargers: "4 (2 DC, 2 AC)", hours: "9am–10pm" }
+        ];
+
+        // Get price category
+        function getPriceCategory(cost) {
+            if (cost <= 0.50) return 'low';
+            if (cost <= 0.59) return 'medium';
+            return 'high';
+        }
+
+        // Random availability
+        function getRandomAvailability() {
+            const statuses = [
+                { text: "4 Available", cls: "available" },
+                { text: "2 Available", cls: "available" },
+                { text: "All Free", cls: "available" },
+                { text: "Busy", cls: "busy" },
+                { text: "1 Available", cls: "available" }
+            ];
+            return statuses[Math.floor(Math.random() * statuses.length)];
+        }
+
+        // Render stations
+        function renderStations(filter = 'all') {
+            const grid = document.getElementById('stationsGrid');
+            grid.innerHTML = '';
+
+            stations.forEach(station => {
+                const category = getPriceCategory(station.cost);
+                if (filter !== 'all' && filter !== category) return;
+
+                const avail = getRandomAvailability();
+
+                const card = document.createElement('div');
+                card.className = 'station-card';
+                card.dataset.category = category;
+                card.innerHTML = `
+                    <div class="station-name">${station.name}</div>
+                    <div class="station-cost">S$${station.cost.toFixed(2)}/kWh</div>
+                    <div class="station-detail"><span class="detail-label">Address:</span> ${station.address}</div>
+                    <div class="station-detail"><span class="detail-label">Chargers:</span> ${station.chargers}</div>
+                    <div class="station-detail"><span class="detail-label">Hours:</span> ${station.hours}</div>
+                    <div class="station-detail">
+                        <span class="detail-label">Availability:</span>
+                        <span class="availability ${avail.cls}">${avail.text}</span>
+                    </div>
+                `;
+                grid.appendChild(card);
+            });
+        }
+
+        // Filter buttons
+        document.querySelectorAll('.filter-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+                btn.classList.add('active');
+                const filter = btn.dataset.filter;
+                renderStations(filter);
+            });
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function () {
+            updateAuthNav();
+            setupLogoutHandler();
+            renderStations('all');
+        });
+    </script>
+</body>
+
+</html>

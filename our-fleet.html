@@ -1,0 +1,893 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Our Fleet - AZoom Car Rental</title>
+    <link rel="stylesheet" href="styleAZoom.css" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <style>
+        /* Fleet-specific styles */
+        .fleet-header {
+            text-align: center;
+            padding: 60px 0 40px;
+            background-color: #f0f7ff;
+            margin-top: 40px;
+        }
+
+        .fleet-tabs {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .tab-btn {
+            padding: 10px 25px;
+            background: white;
+            border: 2px solid #2ecc71;
+            color: #1a3a6c;
+            font-weight: 600;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .tab-btn.active,
+        .tab-btn:hover {
+            background: linear-gradient(90deg, #2ecc71, #3498db);
+            color: white;
+        }
+
+        .car-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 20px;
+            margin-bottom: 30px;
+        }
+
+        .car-item {
+            background: white;
+            border-radius: 15px;
+            overflow: hidden;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s;
+        }
+
+        .car-item:hover {
+            transform: translateY(-2px);
+        }
+
+        .car-img-placeholder {
+            height: 200px;
+            background-color: #e9f5ff;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+
+        .car-img-placeholder img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            object-position: center;
+        }
+
+        .car-info {
+            padding: 20px;
+        }
+
+        .car-info h3 {
+            font-size: 1.4rem;
+            margin-bottom: 8px;
+            color: #1a3a6c;
+        }
+
+        .car-type-tag {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .type-ev {
+            background: #e8f5e9;
+            color: #2e7d32;
+        }
+
+        .type-hybrid {
+            background: #fff8e1;
+            color: #f57f17;
+        }
+
+        .type-gas {
+            background: #ffebee;
+            color: #c62828;
+        }
+
+        .car-price {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #1a3a6c;
+            margin: 10px 0;
+        }
+
+        .car-specs {
+            display: flex;
+            justify-content: space-between;
+            font-size: 0.9rem;
+            color: #666;
+            margin: 10px 0;
+        }
+
+        .reserve-btn {
+            display: inline-block;
+            background: linear-gradient(90deg, #2ecc71, #3498db);
+            opacity: 0.8;
+            color: white;
+            padding: 10px 15px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .reserve-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+        }
+
+        /* Greeting text styled like a nav link (but not clickable) */
+        .nav-greeting {
+            color: #333;
+            font-weight: 500;
+            text-decoration: none;
+            padding: 0px 0;
+            white-space: nowrap;
+            margin-right: 15px;
+            display: inline;
+            vertical-align: middle;
+            line-height: normal;
+            margin-bottom: 0;
+        }
+
+        .logout-btn {
+            background: linear-gradient(90deg, #e74c3c, #c0392b);
+            color: white !important;
+            padding: 8px 20px !important;
+            border-radius: 20px !important;
+            margin-left: 10px !important;
+            border: none !important;
+            vertical-align: middle;
+        }
+
+        .logout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 10px rgba(231, 76, 60, 0.4) !important;
+        }
+
+        #authNav {
+            display: flex;
+            align-items: center;
+            margin-top: 0 !important;
+        }
+
+        /* Hide by default */
+        #authNav #greeting,
+        #authNav #logoutBtn {
+            display: none;
+        }
+
+        .hidden-section {
+            display: none;
+        }
+
+        /* For center-align greeting in mobile menu */
+        @media (max-width: 768px) {
+            .nav-menu.active #authNav {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                padding: 15px 0;
+            }
+
+            .nav-menu.active #authNav .nav-greeting,
+            .nav-menu.active #authNav .logout-btn {
+                margin: 0 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="azoom-logo.png" alt="AZoom Logo" />
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="AZoom Rental.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="our-fleet.html" class="nav-link active">Our Fleet</a></li>
+                <li class="nav-item"><a href="charging-stations.html" class="nav-link">Charging Stations</a></li>
+                <li class="nav-item"><a href="locations.html" class="nav-link">Locations</a></li>
+                <li class="nav-item"><a href="about.html" class="nav-link">About Us</a></li>
+                <li class="nav-item"><a href="login.html" class="nav-link login-btn">Login</a></li>
+                <!-- Auth Section -->
+                <li class="nav-item" id="authNav"><a href="myreservations.html" class="nav-link">My Reservations</a>
+                </li>
+                <li><span id="greeting" class="nav-greeting"></span>
+                    <a href="#" id="logoutBtn" class="nav-link logout-btn">Logout</a>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Fleet Header -->
+    <section class="fleet-header">
+        <div class="container">
+            <h1 class="section-title">Our Fleet</h1>
+            <p style="font-size: 1.2rem; max-width: 700px; margin: 0 auto; opacity: 0.9;">
+                Choose from our wide selection of eco-friendly electric vehicles, efficient hybrids, and reliable
+                gasoline cars — all available for rent in Singapore.
+            </p>
+        </div>
+    </section>
+
+    <!-- Fleet Tabs -->
+    <section class="container">
+        <div class="fleet-tabs">
+            <button class="tab-btn active" data-tab="ev">Electric Vehicles</button>
+            <button class="tab-btn" data-tab="hybrid">Hybrid</button>
+            <button class="tab-btn" data-tab="gasoline">Gasoline</button>
+        </div>
+
+        <!-- Electric Vehicles Section -->
+        <div id="ev" class="car-section">
+            <div class="car-grid">
+                <div class="car-item">
+                    <div class="car-img-placeholder">
+                        <span><img src="Vehicles/deepal_s07.png" alt="Deepal S07"></span>
+                    </div>
+                    <div class="car-info">
+                        <span class="car-type-tag type-ev">Premium Electric</span>
+                        <h3>Changan Deepal S07</h3>
+                        <div class="car-specs">
+                            <span>163kW</span>
+                            <span>475km range</span>
+                            <span>5 seats</span>
+                        </div>
+                        <div class="car-price">S$89/day</div>
+                        <a href="reservation.html?car=Deepal+S07&model=Premium+Electric+Sedan&price=89"
+                            class="btn-secondary reserve-btn">Reserve</a>
+                    </div>
+                </div>
+
+                <div class="car-item">
+                    <div class="car-img-placeholder">
+                        <span><img src="Vehicles/byd_sealion7.png" alt="BYD Sealion 7"></span>
+                    </div>
+                    <div class="car-info">
+                        <span class="car-type-tag type-ev">Electric</span>
+                        <h3>BYD Sealion 7</h3>
+                        <div class="car-specs">
+                            <span>230kW</span>
+                            <span>405km range</span>
+                            <span>5 seats</span>
+                        </div>
+                        <div class="car-price">S$65/day</div>
+                        <a href="reservation.html?car=BYD+Sealion+7&model=Electric+SUV&price=65"
+                            class="btn-secondary reserve-btn">Reserve</a>
+                    </div>
+                </div>
+
+                <div class="car-item">
+                    <div class="car-img-placeholder">
+                        <span><img src="Vehicles/aion_hyptec.png" alt="AION Hyptec HT"></span>
+                    </div>
+                    <div class="car-info">
+                        <span class="car-type-tag type-ev">Premium Electric</span>
+                        <h3>AION Hyptec HT</h3>
+                        <div class="car-specs">
+                            <span>180kW</span>
+                            <span>510km range</span>
+                            <span>5 seats</span>
+                        </div>
+                        <div class="car-price">S$92/day</div>
+                        <a href="reservation.html?car=AION+Hyptec+HT&model=Premium+Electric+Sedan&price=92"
+                            class="btn-secondary reserve-btn">Reserve</a>
+                    </div>
+                </div>
+
+                <div class="car-item">
+                    <div class="car-img-placeholder">
+                        <span><img src="Vehicles/aion_v.png" alt="AION V"></span>
+                    </div>
+                    <div class="car-info">
+                        <span class="car-type-tag type-ev">Electric</span>
+                        <h3>AION V</h3>
+                        <div class="car-specs">
+                            <span>150kW</span>
+                            <span>420km range</span>
+                            <span>5 seats</span>
+                        </div>
+                        <div class="car-price">S$68/day</div>
+                        <a href="reservation.html?car=AION+V&model=Electric+SUV&price=68"
+                            class="btn-secondary reserve-btn">Reserve</a>
+                    </div>
+                </div>
+
+                <div class="car-item">
+                    <div class="car-img-placeholder">
+                        <span><img src="Vehicles/aion_y_plus.png" alt="AION Y Plus"></span>
+                    </div>
+                    <div class="car-info">
+                        <span class="car-type-tag type-ev">Electric</span>
+                        <h3>AION Y Plus</h3>
+                        <div class="car-specs">
+                            <span>150kW</span>
+                            <span>430km range</span>
+                            <span>5 seats</span>
+                        </div>
+                        <div class="car-price">S$70/day</div>
+                        <a href="reservation.html?car=AION+Y+Plus&model=Electric+Crossover&price=70"
+                            class="btn-secondary reserve-btn">Reserve</a>
+                    </div>
+                </div>
+
+                <div class="car-item">
+                    <div class="car-img-placeholder">
+                        <span><img src="Vehicles/bmw_i4.png" alt="BMW i4"></span>
+                    </div>
+                    <div class="car-info">
+                        <span class="car-type-tag type-ev">Luxury Electric</span>
+                        <h3>BMW i4</h3>
+                        <div class="car-specs">
+                            <span>250kW</span>
+                            <span>590km range</span>
+                            <span>5 seats</span>
+                        </div>
+                        <div class="car-price">S$145/day</div>
+                        <a href="reservation.html?car=BMW+i4&model=Luxury+Electric+Sedan&price=145"
+                            class="btn-secondary reserve-btn">Reserve</a>
+                    </div>
+                </div>
+
+                <div class="car-item">
+                    <div class="car-img-placeholder">
+                        <span><img src="Vehicles/bmw_ix1.png" alt="BMW iX1"></span>
+                    </div>
+                    <div class="car-info">
+                        <span class="car-type-tag type-ev">Premium Electric</span>
+                        <h3>BMW iX1</h3>
+                        <div class="car-specs">
+                            <span>230kW</span>
+                            <span>438km range</span>
+                            <span>5 seats</span>
+                        </div>
+                        <div class="car-price">S$120/day</div>
+                        <a href="reservation.html?car=BMW+iX1&model=Premium+Electric+SUV&price=120"
+                            class="btn-secondary reserve-btn">Reserve</a>
+                    </div>
+                </div>
+
+                <div class="car-item">
+                    <div class="car-img-placeholder">
+                        <span><img src="Vehicles/byd_atto3.png" alt="BYD Atto 3"></span>
+                    </div>
+                    <div class="car-info">
+                        <span class="car-type-tag type-ev">Electric</span>
+                        <h3>BYD Atto 3</h3>
+                        <div class="car-specs">
+                            <span>150kW</span>
+                            <span>420km range</span>
+                            <span>5 seats</span>
+                        </div>
+                        <div class="car-price">S$62/day</div>
+                        <a href="reservation.html?car=BYD+Atto+3&model=Electric+SUV&price=62"
+                            class="btn-secondary reserve-btn">Reserve</a>
+                    </div>
+                </div>
+
+                <div class="car-item">
+                    <div class="car-img-placeholder">
+                        <span><img src="Vehicles/byd_seal6.png" alt="BYD Seal 6"></span>
+                    </div>
+                    <div class="car-info">
+                        <span class="car-type-tag type-ev">Electric</span>
+                        <h3>BYD Seal 6</h3>
+                        <div class="car-specs">
+                            <span>160kW</span>
+                            <span>450km range</span>
+                            <span>5 seats</span>
+                        </div>
+                        <div class="car-price">S$72/day</div>
+                        <a href="reservation.html?car=BYD+Seal+6&model=Electric+Sedan&price=72"
+                            class="btn-secondary reserve-btn">Reserve</a>
+                    </div>
+                </div>
+
+                <div class="car-item">
+                    <div class="car-img-placeholder">
+                        <span><img src="Vehicles/byd_e6.png" alt="BYD E6"></span>
+                    </div>
+                    <div class="car-info">
+                        <span class="car-type-tag type-ev">Electric MPV</span>
+                        <h3>BYD E6</h3>
+                        <div class="car-specs">
+                            <span>120kW</span>
+                            <span>400km range</span>
+                            <span>6 seats</span>
+                        </div>
+                        <div class="car-price">S$85/day</div>
+                        <a href="reservation.html?car=BYD+E6&model=Electric+MPV&price=85"
+                            class="btn-secondary reserve-btn">Reserve</a>
+                    </div>
+                </div>
+
+                <div class="car-item">
+                    <div class="car-img-placeholder">
+                        <span><img src="Vehicles/denza_d9.png" alt="Denza D9"></span>
+                    </div>
+                    <div class="car-info">
+                        <span class="car-type-tag type-ev">Luxury Electric MPV</span>
+                        <h3>Denza D9</h3>
+                        <div class="car-specs">
+                            <span>200kW</span>
+                            <span>520km range</span>
+                            <span>7 seats</span>
+                        </div>
+                        <div class="car-price">S$160/day</div>
+                        <a href="reservation.html?car=Denza+D9&model=Luxury+Electric+MPV&price=160"
+                            class="btn-secondary reserve-btn">Reserve</a>
+                    </div>
+                </div>
+
+                <div class="car-item">
+                    <div class="car-img-placeholder">
+                        <span><img src="Vehicles/dongfeng_box.png" alt="DongFeng Box"></span>
+                    </div>
+                    <div class="car-info">
+                        <span class="car-type-tag type-ev">Electric</span>
+                        <h3>DongFeng Box</h3>
+                        <div class="car-specs">
+                            <span>130kW</span>
+                            <span>380km range</span>
+                            <span>5 seats</span>
+                        </div>
+                        <div class="car-price">S$58/day</div>
+                        <a href="reservation.html?car=DongFeng+Box&model=Compact+Electric+SUV&price=58"
+                            class="btn-secondary reserve-btn">Reserve</a>
+                    </div>
+                </div>
+
+                <div class="car-item">
+                    <div class="car-img-placeholder">
+                        <span><img src="Vehicles/kia_ev6.png" alt="KIA EV6"></span>
+                    </div>
+                    <div class="car-info">
+                        <span class="car-type-tag type-ev">Premium Electric</span>
+                        <h3>KIA EV6</h3>
+                        <div class="car-specs">
+                            <span>239kW</span>
+                            <span>528km range</span>
+                            <span>5 seats</span>
+                        </div>
+                        <div class="car-price">S$98/day</div>
+                        <a href="reservation.html?car=KIA+EV6&model=Premium+Electric+Crossover&price=98"
+                            class="btn-secondary reserve-btn">Reserve</a>
+                    </div>
+                </div>
+
+                <div class="car-item">
+                    <div class="car-img-placeholder">
+                        <span><img src="Vehicles/mg_m4.png" alt="MG M4"></span>
+                    </div>
+                    <div class="car-info">
+                        <span class="car-type-tag type-ev">Electric</span>
+                        <h3>MG M4</h3>
+                        <div class="car-specs">
+                            <span>150kW</span>
+                            <span>450km range</span>
+                            <span>5 seats</span>
+                        </div>
+                        <div class="car-price">S$60/day</div>
+                        <a href="reservation.html?car=MG+M4&model=Electric+Hatchback&price=60"
+                            class="btn-secondary reserve-btn">Reserve</a>
+                    </div>
+                </div>
+
+                <div class="car-item">
+                    <div class="car-img-placeholder">
+                        <span><img src="Vehicles/nio_firefly.png" alt="NIO Firefly"></span>
+                    </div>
+                    <div class="car-info">
+                        <span class="car-type-tag type-ev">Premium Electric</span>
+                        <h3>NIO Firefly</h3>
+                        <div class="car-specs">
+                            <span>170kW</span>
+                            <span>480km range</span>
+                            <span>5 seats</span>
+                        </div>
+                        <div class="car-price">S$88/day</div>
+                        <a href="reservation.html?car=NIO+Firefly&model=Premium+Electric+Hatchback&price=88"
+                            class="btn-secondary reserve-btn">Reserve</a>
+                    </div>
+                </div>
+
+                <div class="car-item">
+                    <div class="car-img-placeholder">
+                        <span><img src="Vehicles/xpeng_g6.png" alt="Xpeng G6"></span>
+                    </div>
+                    <div class="car-info">
+                        <span class="car-type-tag type-ev">Premium Electric</span>
+                        <h3>Xpeng G6</h3>
+                        <div class="car-specs">
+                            <span>210kW</span>
+                            <span>580km range</span>
+                            <span>5 seats</span>
+                        </div>
+                        <div class="car-price">S$95/day</div>
+                        <a href="reservation.html?car=Xpeng+G6&model=Premium+Electric+SUV&price=95"
+                            class="btn-secondary reserve-btn">Reserve</a>
+                    </div>
+                </div>
+
+                <div class="car-item">
+                    <div class="car-img-placeholder">
+                        <span><img src="Vehicles/xpeng_x9.png" alt="Xpeng X9"></span>
+                    </div>
+                    <div class="car-info">
+                        <span class="car-type-tag type-ev">Luxury Electric MPV</span>
+                        <h3>Xpeng X9</h3>
+                        <div class="car-specs">
+                            <span>240kW</span>
+                            <span>600km range</span>
+                            <span>6 seats</span>
+                        </div>
+                        <div class="car-price">S$155/day</div>
+                        <a href="reservation.html?car=Xpeng+X9&model=Luxury+Electric+MPV&price=155"
+                            class="btn-secondary reserve-btn">Reserve</a>
+                    </div>
+                </div>
+
+                <div class="car-item">
+                    <div class="car-img-placeholder">
+                        <span><img src="Vehicles/zeekr_7x.png" alt="Zeekr 7X"></span>
+                    </div>
+                    <div class="car-info">
+                        <span class="car-type-tag type-ev">Premium Electric</span>
+                        <h3>Zeekr 7X</h3>
+                        <div class="car-specs">
+                            <span>310kW</span>
+                            <span>560km range</span>
+                            <span>5 seats</span>
+                        </div>
+                        <div class="car-price">S$110/day</div>
+                        <a href="reservation.html?car=Zeekr+7X&model=Premium+Electric+SUV&price=110"
+                            class="btn-secondary reserve-btn">Reserve</a>
+                    </div>
+                </div>
+
+                <div class="car-item">
+                    <div class="car-img-placeholder">
+                        <span><img src="Vehicles/zeekr_009.png" alt="Zeekr 009"></span>
+                    </div>
+                    <div class="car-info">
+                        <span class="car-type-tag type-ev">Luxury Electric MPV</span>
+                        <h3>Zeekr 009</h3>
+                        <div class="car-specs">
+                            <span>400kW</span>
+                            <span>702km range</span>
+                            <span>6 seats</span>
+                        </div>
+                        <div class="car-price">S$180/day</div>
+                        <a href="reservation.html?car=Zeekr+009&model=Luxury+Electric+MPV&price=180"
+                            class="btn-secondary reserve-btn">Reserve</a>
+                    </div>
+                </div>
+
+                <div class="car-item">
+                    <div class="car-img-placeholder">
+                        <span><img src="Vehicles/zeekr_x1.png" alt="Zeekr X1"></span>
+                    </div>
+                    <div class="car-info">
+                        <span class="car-type-tag type-ev">Premium Electric</span>
+                        <h3>Zeekr X1</h3>
+                        <div class="car-specs">
+                            <span>200kW</span>
+                            <span>512km range</span>
+                            <span>5 seats</span>
+                        </div>
+                        <div class="car-price">S$105/day</div>
+                        <a href="reservation.html?car=Zeekr+X1&model=Premium+Electric+Crossover&price=105"
+                            class="btn-secondary reserve-btn">Reserve</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Hybrid Section -->
+        <div id="hybrid" class="car-section hidden-section">
+            <div class="car-grid">
+                <div class="car-item">
+                    <div class="car-img-placeholder">
+                        <span><img src="Vehicles/honda_jazz.png" alt="Honda Jazz Hybrid"></span>
+                    </div>
+                    <div class="car-info">
+                        <span class="car-type-tag type-hybrid">Hybrid</span>
+                        <h3>Honda Jazz Hybrid</h3>
+                        <div class="car-specs">
+                            <span>1500cc</span>
+                            <span>4.4L/100km</span>
+                            <span>5 seats</span>
+                        </div>
+                        <div class="car-price">S$75/day</div>
+                        <a href="reservation.html?car=Honda+Jazz&model=Economy+Hybrid+Hatchback&price=75"
+                            class="btn-secondary reserve-btn">Reserve</a>
+                    </div>
+                </div>
+
+                <div class="car-item">
+                    <div class="car-img-placeholder">
+                        <span><img src="Vehicles/hyundai_kona.png" alt="Hyundai Kona Hybrid"></span>
+                    </div>
+                    <div class="car-info">
+                        <span class="car-type-tag type-hybrid">Hybrid</span>
+                        <h3>Hyundai Kona Hybrid</h3>
+                        <div class="car-specs">
+                            <span>1600cc</span>
+                            <span>4.5L/100km</span>
+                            <span>5 seats</span>
+                        </div>
+                        <div class="car-price">S$80/day</div>
+                        <a href="reservation.html?car=Hyundai+Kona&model=Hybrid+SUV&price=80"
+                            class="btn-secondary reserve-btn">Reserve</a>
+                    </div>
+                </div>
+
+                <div class="car-item">
+                    <div class="car-img-placeholder">
+                        <span><img src="Vehicles/kia_carnival.png" alt="KIA Carnival"></span>
+                    </div>
+                    <div class="car-info">
+                        <span class="car-type-tag type-hybrid">Hybrid MPV</span>
+                        <h3>KIA Carnival</h3>
+                        <div class="car-specs">
+                            <span>1600cc</span>
+                            <span>6.5L/100km</span>
+                            <span>8 seats</span>
+                        </div>
+                        <div class="car-price">S$115/day</div>
+                        <a href="reservation.html?car=KIA+Carnival&model=Gasoline+MPV&price=115"
+                            class="btn-secondary reserve-btn">Reserve</a>
+                    </div>
+                </div>
+
+                <div class="car-item">
+                    <div class="car-img-placeholder">
+                        <span><img src="Vehicles/kia_niro.png" alt="KIA Niro Hybrid"></span>
+                    </div>
+                    <div class="car-info">
+                        <span class="car-type-tag type-hybrid">Hybrid</span>
+                        <h3>KIA Niro Hybrid</h3>
+                        <div class="car-specs">
+                            <span>1600cc</span>
+                            <span>4.3L/100km</span>
+                            <span>5 seats</span>
+                        </div>
+                        <div class="car-price">S$78/day</div>
+                        <a href="reservation.html?car=KIA+Niro&model=Hybrid+Crossover&price=78"
+                            class="btn-secondary reserve-btn">Reserve</a>
+                    </div>
+                </div>
+
+                <div class="car-item">
+                    <div class="car-img-placeholder">
+                        <span><img src="Vehicles/nissan_note.png" alt="Nissan Note E-Power"></span>
+                    </div>
+                    <div class="car-info">
+                        <span class="car-type-tag type-hybrid">Hybrid</span>
+                        <h3>Nissan Note E-Power</h3>
+                        <div class="car-specs">
+                            <span>1200cc</span>
+                            <span>3.4L/100km</span>
+                            <span>5 seats</span>
+                        </div>
+                        <div class="car-price">S$72/day</div>
+                        <a href="reservation.html?car=Nissan+Note+E-Power&model=E-Power+Hybrid+Hatchback&price=72"
+                            class="btn-secondary reserve-btn">Reserve</a>
+                    </div>
+                </div>
+
+                <div class="car-item">
+                    <div class="car-img-placeholder">
+                        <span><img src="Vehicles/toyota_sienta.png" alt="Toyota Sienta Hybrid"></span>
+                    </div>
+                    <div class="car-info">
+                        <span class="car-type-tag type-hybrid">Hybrid MPV</span>
+                        <h3>Toyota Sienta Hybrid</h3>
+                        <div class="car-specs">
+                            <span>1500cc</span>
+                            <span>4.7L/100km</span>
+                            <span>7 seats</span>
+                        </div>
+                        <div class="car-price">S$88/day</div>
+                        <a href="reservation.html?car=Toyota+Sienta&model=Hybrid+MPV&price=88"
+                            class="btn-secondary reserve-btn">Reserve</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Gasoline Section -->
+        <div id="gasoline" class="car-section hidden-section">
+            <div class="car-grid">
+                <div class="car-item">
+                    <div class="car-img-placeholder">
+                        <span><img src="Vehicles/toyota_corolla.png" alt="Toyota Corolla"></span>
+                    </div>
+                    <div class="car-info">
+                        <span class="car-type-tag type-gas">Gasoline</span>
+                        <h3>Toyota Corolla</h3>
+                        <div class="car-specs">
+                            <span>1600cc</span>
+                            <span>6.5L/100km</span>
+                            <span>5 seats</span>
+                        </div>
+                        <div class="car-price">S$70/day</div>
+                        <a href="reservation.html?car=Toyota+Corolla&model=Gasoline+Sedan&price=70"
+                            class="btn-secondary reserve-btn">Reserve</a>
+                    </div>
+                </div>
+
+                <div class="car-item">
+                    <div class="car-img-placeholder">
+                        <span><img src="Vehicles/mazda_cx5.png" alt="Mazda CX5"></span>
+                    </div>
+                    <div class="car-info">
+                        <span class="car-type-tag type-gas">Gasoline SUV</span>
+                        <h3>Mazda CX-5</h3>
+                        <div class="car-specs">
+                            <span>2500cc</span>
+                            <span>7.4L/100km</span>
+                            <span>5 seats</span>
+                        </div>
+                        <div class="car-price">S$85/day</div>
+                        <a href="reservation.html?car=Mazda+CX5&model=Gasoline+SUV&price=85"
+                            class="btn-secondary reserve-btn">Reserve</a>
+                    </div>
+                </div>
+
+                <div class="car-item">
+                    <div class="car-img-placeholder">
+                        <span><img src="Vehicles/mazda3.png" alt="Mazda3"></span>
+                    </div>
+                    <div class="car-info">
+                        <span class="car-type-tag type-gas">Gasoline Sedan</span>
+                        <h3>Mazda3</h3>
+                        <div class="car-specs">
+                            <span>2000cc</span>
+                            <span>6.2L/100km</span>
+                            <span>5 seats</span>
+                        </div>
+                        <div class="car-price">S$76/day</div>
+                        <a href="reservation.html?car=Mazda3&model=Gasoline+Sedan&price=76"
+                            class="btn-secondary reserve-btn">Reserve</a>
+                    </div>
+                </div>
+
+                <div class="car-item">
+                    <div class="car-img-placeholder">
+                        <span><img src="Vehicles/nissan_xtrail.png" alt="Nissan X-Trail"></span>
+                    </div>
+                    <div class="car-info">
+                        <span class="car-type-tag type-gas">Gasoline SUV</span>
+                        <h3>Nissan X-Trail</h3>
+                        <div class="car-specs">
+                            <span>2500cc</span>
+                            <span>7.8L/100km</span>
+                            <span>5 seats</span>
+                        </div>
+                        <div class="car-price">S$82/day</div>
+                        <a href="reservation.html?car=Nissan+X-Trail&model=Gasoline+SUV&price=82"
+                            class="btn-secondary reserve-btn">Reserve</a>
+                    </div>
+                </div>
+
+                <div class="car-item">
+                    <div class="car-img-placeholder">
+                        <span><img src="Vehicles/ssangyong_tivoli.png" alt="SsangYong Tivoli"></span>
+                    </div>
+                    <div class="car-info">
+                        <span class="car-type-tag type-gas">Gasoline SUV</span>
+                        <h3>SsangYong Tivoli</h3>
+                        <div class="car-specs">
+                            <span>1600cc</span>
+                            <span>6.9L/100km</span>
+                            <span>5 seats</span>
+                        </div>
+                        <div class="car-price">S$68/day</div>
+                        <a href="reservation.html?car=SsangYong+Tivoli&model=Compact+Gasoline+SUV&price=68"
+                            class="btn-secondary reserve-btn">Reserve</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="azoom-logo.png" alt="AZoom Logo" />
+                    <p>Singapore's premier electric vehicle rental service</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="AZoom Rental.html">Home</a></li>
+                        <li><a href="our-fleet.html">Our Fleet</a></li>
+                        <li><a href="charging-stations.html">Charging Stations</a></li>
+                        <li><a href="locations.html">Locations</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <p>📞 +65 6123 4567</p>
+                    <p>✉️ info@azoom.com.sg</p>
+                    <p>📍 17 Eco Drive, Singapore 076852</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 AZoom Car Rental. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="scriptAZoom.js"></script>
+    <script>
+        // Fleet tab functionality
+        document.querySelectorAll('.tab-btn').forEach(button => {
+            button.addEventListener('click', () => {
+                // Remove active
+                document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+                // Add active to clicked
+                button.classList.add('active');
+                // Hide all sections
+                document.querySelectorAll('.car-section').forEach(sec => sec.classList.add('hidden-section'));
+                // Show selected section
+                const tabId = button.getAttribute('data-tab');
+                document.getElementById(tabId).classList.remove('hidden-section');
+            });
+        });
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function () {
+            updateAuthNav();
+            setupLogoutHandler();
+        });
+    </script>
+</body>
+
+</html>

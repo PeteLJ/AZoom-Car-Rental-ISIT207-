@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Reserve Vehicle - AZoom</title>
+    <link rel="stylesheet" href="styleAZoom.css" />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet" />
+    <style>
+        .btn-primary {
+            display: inline-block;
+            background: linear-gradient(90deg, #cc2e31, #b10e21);
+            opacity: 0.8;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
+
+        }
+
+        .reservation-container {
+            max-width: 800px;
+            margin: 60px auto;
+            padding: 30px;
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .car-summary {
+            background: #f0f7ff;
+            padding: 20px;
+            border-radius: 10px;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #1a3a6c;
+        }
+
+        .form-group input {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .readonly {
+            background: #f5f5f5;
+            cursor: not-allowed;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            border-bottom: 1px solid #eee;
+        }
+
+        .summary-title {
+            font-size: 1.8rem;
+            text-align: center;
+            margin: 30px 0;
+            color: #2ecc71;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        /* For center-align greeting in mobile menu */
+        @media (max-width: 768px) {
+            .nav-menu.active #authNav {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                width: 100%;
+                padding: 15px 0;
+            }
+
+            .nav-menu.active #authNav .nav-greeting,
+            .nav-menu.active #authNav .logout-btn {
+                margin: 0 10px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="azoom-logo.png" alt="AZoom Logo" />
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="AZoom Rental.html" class="nav-link">Home</a></li>
+                <li class="nav-item"><a href="our-fleet.html" class="nav-link active">Our Fleet</a></li>
+                <li class="nav-item"><a href="charging-stations.html" class="nav-link">Charging Stations</a></li>
+                <li class="nav-item"><a href="locations.html" class="nav-link">Locations</a></li>
+                <li class="nav-item"><a href="about.html" class="nav-link">About Us</a></li>
+                <li class="nav-item"><a href="login.html" class="nav-link login-btn">Login</a></li>
+                <!-- Auth Section -->
+                <li class="nav-item" id="authNav"><a href="myreservations.html" class="nav-link">My Reservations</a>
+                </li>
+                <li><span id="greeting" class="nav-greeting"></span>
+                    <a href="#" id="logoutBtn" class="nav-link logout-btn">Logout</a>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <div class="reservation-container">
+            <!-- Reservation Form -->
+            <div id="reservationForm">
+                <div class="car-summary">
+                    <h2 id="selectedCar">Selecting vehicle...</h2>
+                    <p id="carModel"></p>
+                    <p><strong>Rental Cost:</strong> S$<span id="carPrice">0</span>/day</p>
+                </div>
+
+                <form id="bookingForm">
+                    <div class="form-group">
+                        <label for="fullName">Full Name *</label>
+                        <input type="text" id="fullName" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="email">Email *</label>
+                        <input type="email" id="email" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="phone">Phone Number *</label>
+                        <input type="tel" id="phone" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="carModelReadonly">Car Model</label>
+                        <input type="text" id="carModelReadonly" class="readonly" readonly />
+                    </div>
+                    <div class="form-group">
+                        <label for="rentalCost">Rental Cost (S$/day)</label>
+                        <input type="text" id="rentalCost" class="readonly" readonly />
+                    </div>
+                    <div class="form-group">
+                        <label for="pickup">Collection Date & Time *</label>
+                        <input type="datetime-local" id="pickup" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="return">Return Date & Time *</label>
+                        <input type="datetime-local" id="return" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="cardNumber">Credit Card Number *</label>
+                        <input type="text" id="cardNumber" maxlength="19" placeholder="1234 5678 9012 3456" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="expiry">Expiry Date (MM/YY) *</label>
+                        <input type="text" id="expiry" maxlength="5" placeholder="02/28" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="cvv">CVV *</label>
+                        <input type="text" id="cvv" maxlength="3" placeholder="123" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="cardholder">Cardholder Name *</label>
+                        <input type="text" id="cardholder" required />
+                    </div>
+                    <div class="form-group">
+                        <label for="license">Driving License Number *</label>
+                        <input type="text" id="license" required />
+                    </div>
+                    <button type="submit" class="btn-primary" style="width: 100%;">Confirm Reservation</button>
+                </form>
+            </div>
+
+            <!-- Summary View -->
+            <div id="summaryView" class="hidden">
+                <h2 class="summary-title">Reservation Confirmed!</h2>
+                <div class="summary-item">
+                    <span>Reservation ID:</span>
+                    <strong id="resId"></strong>
+                </div>
+                <div class="summary-item">
+                    <span>Car Plate:</span>
+                    <strong id="carPlate"></strong>
+                </div>
+                <div class="summary-item">
+                    <span>Car:</span>
+                    <span id="summaryCar"></span>
+                </div>
+                <div class="summary-item">
+                    <span>Collection:</span>
+                    <span id="summaryPickup"></span>
+                </div>
+                <div class="summary-item">
+                    <span>Return:</span>
+                    <span id="summaryReturn"></span>
+                </div>
+                <div class="summary-item">
+                    <span>Total Cost:</span>
+                    <span id="totalCost"></span>
+                </div>
+                <a href="myreservations.html" class="btn-primary"
+                    style="display: block; margin-top: 20px; text-align: center;">View My
+                    Reservations</a>
+            </div>
+        </div>
+    </div>
+
+    <script src="scriptAZoom.js"></script>
+    <script>
+        // Get URL params
+        function getUrlParam(name) {
+            const urlParams = new URLSearchParams(window.location.search);
+            return urlParams.get(name);
+        }
+
+        // Generate random car plate: S[L-P][A-Z][0000-9999][A-Z]
+        function generateCarPlate() {
+            const letters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ';
+            const lpRange = 'LMNOP'; // L to P
+            const first = 'S';
+            const second = lpRange.charAt(Math.floor(Math.random() * lpRange.length));
+            const third = letters.charAt(Math.floor(Math.random() * letters.length));
+            const number = String(Math.floor(Math.random() * 10000)).padStart(4, '0');
+            const last = letters.charAt(Math.floor(Math.random() * letters.length));
+            return `${first}${second}${third}${number}${last}`;
+        }
+
+        // Generate reservation ID
+        function generateResId() {
+            const num1 = Math.floor(Math.random() * 999999999);
+            const num2 = Math.floor(Math.random() * 999);
+            return `AZOOM-${num1}-${num2}`;
+        }
+
+        // Format card number with spaces
+        document.getElementById('cardNumber').addEventListener('input', function (e) {
+            let value = e.target.value.replace(/\D/g, '').substring(0, 16);
+            let formatted = '';
+            for (let i = 0; i < value.length; i++) {
+                if (i > 0 && i % 4 === 0) formatted += ' ';
+                formatted += value[i];
+            }
+            e.target.value = formatted;
+        });
+
+        // Format credit card expiry MM/YY
+        document.getElementById('expiry').addEventListener('input', function (e) {
+            let value = e.target.value.replace(/\D/g, '').substring(0, 4);
+            if (value.length >= 2) {
+                value = value.substring(0, 2) + '/' + value.substring(2);
+            }
+            e.target.value = value;
+        });
+
+        // Validate email
+        function isValidEmail(email) {
+            const re = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            return re.test(email);
+        }
+
+        // Validate credit card number
+        function isValidCard(card) {
+            const clean = card.replace(/\s/g, '');
+            return /^\d{16}$/.test(clean);
+        }
+
+        // Validate credit card expiry (MM/YY)
+        function isValidExpiry(exp) {
+            if (!/^\d{2}\/\d{2}$/.test(exp)) return false;
+            const [mm, yy] = exp.split('/').map(Number);
+            if (mm < 1 || mm > 12) return false;
+            const now = new Date();
+            const currentYear = now.getFullYear() % 100;
+            const currentMonth = now.getMonth() + 1;
+            if (yy < currentYear) return false;
+            if (yy === currentYear && mm < currentMonth) return false;
+            return true;
+        }
+        // Get car image URL based on car name
+        function getCarImageUrl(carName) {
+            const imageMap = {
+                'Deepal S07': 'Vehicles/deepal_s07.png',
+                'BYD Sealion 7': 'Vehicles/byd_sealion7.png',
+                'AION Hyptec HT': 'Vehicles/aion_hyptec.png',
+                'AION V': 'Vehicles/aion_v.png',
+                'AION Y Plus': 'Vehicles/aion_y_plus.png',
+                'BMW i4': 'Vehicles/bmw_i4.png',
+                'BMW iX1': 'Vehicles/bmw_ix1.png',
+                'BYD Atto 3': 'Vehicles/byd_atto3.png',
+                'BYD Seal 6': 'Vehicles/byd_seal6.png',
+                'BYD E6': 'Vehicles/byd_e6.png',
+                'Denza D9': 'Vehicles/denza_d9.png',
+                'DongFeng Box': 'Vehicles/dongfeng_box.png',
+                'KIA EV6': 'Vehicles/kia_ev6.png',
+                'MG M4': 'Vehicles/mg_m4.png',
+                'NIO Firefly': 'Vehicles/nio_firefly.png',
+                'Xpeng G6': 'Vehicles/xpeng_g6.png',
+                'Xpeng X9': 'Vehicles/xpeng_x9.png',
+                'Zeekr 7X': 'Vehicles/zeekr_7x.png',
+                'Zeekr 009': 'Vehicles/zeekr_009.png',
+                'Zeekr X1': 'Vehicles/zeekr_x1.png',
+                'Honda Jazz': 'Vehicles/honda_jazz.png',
+                'Hyundai Kona': 'Vehicles/hyundai_kona.png',
+                'KIA Carnival': 'Vehicles/kia_carnival.png',
+                'KIA Niro': 'Vehicles/kia_niro.png',
+                'Nissan Note E-Power': 'Vehicles/nissan_note.png',
+                'Toyota Sienta': 'Vehicles/toyota_sienta.png',
+                'Toyota Corolla': 'Vehicles/toyota_corolla.png',
+                'Mazda CX-5': 'Vehicles/mazda_cx5.png',
+                'Mazda3': 'Vehicles/mazda3.png',
+                'Nissan X-Trail': 'Vehicles/nissan_xtrail.png',
+                'SsangYong Tivoli': 'Vehicles/ssangyong_tivoli.png'
+            };
+            return imageMap[carName] // Return corresponding image
+        }
+
+        // Initialize page
+        document.addEventListener('DOMContentLoaded', function () {
+            updateAuthNav();
+            setupLogoutHandler();
+
+            const car = getUrlParam('car') || 'Unknown';
+            const model = getUrlParam('model') || 'Unknown';
+            const price = getUrlParam('price') || '0';
+
+            document.getElementById('selectedCar').textContent = car;
+            document.getElementById('carModel').textContent = model;
+            document.getElementById('carPrice').textContent = price;
+            document.getElementById('carModelReadonly').value = `${car} (${model})`;
+            document.getElementById('rentalCost').value = `S$${price}/day`;
+
+            // Check login
+            const user = localStorage.getItem('azoomLoggedInUser');
+            if (!user) {
+                alert('Please log in or register first to reserve a vehicle.');
+                window.location.href = 'login.html';
+                return;
+            }
+
+            // Form submission
+            document.getElementById('bookingForm').addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                // Get values
+                const fullName = document.getElementById('fullName').value.trim();
+                const email = document.getElementById('email').value.trim();
+                const phone = document.getElementById('phone').value.trim();
+                const pickup = new Date(document.getElementById('pickup').value);
+                const returnDate = new Date(document.getElementById('return').value);
+                const card = document.getElementById('cardNumber').value;
+                const expiry = document.getElementById('expiry').value;
+                const cvv = document.getElementById('cvv').value;
+
+
+                // Validation
+                if (!fullName || !email || !phone) {
+                    alert('Please fill in all required fields.');
+                    return;
+                }
+                if (!isValidEmail(email)) {
+                    alert('Please enter a valid email.');
+                    return;
+                }
+                if (!isValidCard(card)) {
+                    alert('Credit card must be 16 digits.');
+                    return;
+                }
+                if (!isValidExpiry(expiry)) {
+                    alert('Invalid or expired card date.');
+                    return;
+                }
+                if (!/^\d{3}$/.test(cvv)) {
+                    alert('CVV must be 3 digits.');
+                    return;
+                }
+                if (pickup >= returnDate) {
+                    alert('Return date must be after collection date.');
+                    return;
+                }
+
+                // Show summary
+                const days = Math.ceil((returnDate - pickup) / (1000 * 60 * 60 * 24));
+                const total = days * parseFloat(price);
+
+                document.getElementById('resId').textContent = generateResId();
+                document.getElementById('carPlate').textContent = generateCarPlate();
+                document.getElementById('summaryCar').textContent = `${car} (${model})`;
+                document.getElementById('summaryPickup').textContent = pickup.toLocaleString();
+                document.getElementById('summaryReturn').textContent = returnDate.toLocaleString();
+                document.getElementById('totalCost').textContent = `S$${total.toFixed(2)}`;
+
+                // Save reservation by user
+                const user = JSON.parse(localStorage.getItem('azoomLoggedInUser'));
+                const reservation = {
+                    id: document.getElementById('resId').textContent,
+                    userId: user.email,
+                    car: car,
+                    model: model,
+                    plate: document.getElementById('carPlate').textContent,
+                    pickup: pickup.toISOString(),
+                    return: returnDate.toISOString(),
+                    total: total,
+                    image: getCarImageUrl(car),
+                    status: 'pending', // pending by default
+                    collectedAt: null, // will be set when collected
+                    returnedAt: null, // will be set when returned
+                    damages: [] // will store damage information
+                };
+                const reservations = JSON.parse(localStorage.getItem('azoomReservations') || '[]');
+                reservations.push(reservation);
+                localStorage.setItem('azoomReservations', JSON.stringify(reservations));
+
+                // Show summary
+                document.getElementById('reservationForm').classList.add('hidden');
+                document.getElementById('summaryView').classList.remove('hidden');
+            });
+        });
+    </script>
+</body>
+
+</html>

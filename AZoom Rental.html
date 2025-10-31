@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AZoom Car Rental - Premium Electric & Hybrid Vehicles in Singapore</title>
+    <link rel="stylesheet" href="styleAZoom.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap"
+        rel="stylesheet">
+</head>
+
+<body>
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">
+                <img src="azoom-logo.png" alt="AZoom Logo">
+                <span></span>
+            </div>
+            <ul class="nav-menu">
+                <li class="nav-item"><a href="#" class="nav-link active">Home</a></li>
+                <li class="nav-item"><a href="our-fleet.html" class="nav-link">Our Fleet</a></li>
+                <li class="nav-item"><a href="charging-stations.html" class="nav-link">Charging Stations</a></li>
+                <li class="nav-item"><a href="locations.html" class="nav-link">Locations</a></li>
+                <li class="nav-item"><a href="about.html" class="nav-link">About Us</a></li>
+                <li class="nav-item"><a href="login.html" class="nav-link login-btn">Login</a></li>
+                <!-- Auth Section -->
+                <li class="nav-item" id="authNav"><a href="myreservations.html" class="nav-link">My Reservations</a>
+                </li>
+                <li><span id="greeting" class="nav-greeting"></span>
+                    <a href="#" id="logoutBtn" class="nav-link logout-btn">Logout</a>
+                </li>
+            </ul>
+            <div class="hamburger">
+                <span class="bar"></span>
+                <span class="bar"></span>
+                <span class="bar"></span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>Experience Singapore with Eco-Friendly Mobility</h1>
+            <p>Rent premium electric, hybrid, and gasoline vehicles at competitive rates</p>
+            <div class="hero-buttons">
+                <a href="our-fleet.html" class="btn-primary">Explore Our Fleet</a>
+            </div>
+        </div>
+        <div class="hero-overlay"></div>
+    </section>
+
+    <!-- Why Choose AZoom Section -->
+    <section class="why-choose">
+        <div class="container">
+            <h2 class="section-title">Why Choose AZoom?</h2>
+            <div class="benefits-grid">
+                <div class="benefit-card">
+                    <div class="icon">⚡</div>
+                    <h3>EV-Focused Fleet</h3>
+                    <p>Specializing in the latest electric vehicles with competitive pricing</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="icon">🌱</div>
+                    <h3>Eco-Friendly</h3>
+                    <p>Reduce your carbon footprint with our zero-emission vehicles</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="icon">💰</div>
+                    <h3>Cost Savings</h3>
+                    <p>EV rentals up to 30% cheaper than conventional vehicles</p>
+                </div>
+                <div class="benefit-card">
+                    <div class="icon">📍</div>
+                    <h3>Convenient Locations</h3>
+                    <p>4 branches in Singapore with easy pickup and return</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works Section -->
+    <section class="how-it-works">
+        <div class="container">
+            <h2 class="section-title">How It Works</h2>
+            <div class="steps-container">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <h3>Choose Your Vehicle</h3>
+                    <p>Browse our extensive fleet of EVs, hybrids, and gasoline cars</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <h3>Book Online</h3>
+                    <p>Reserve your vehicle with a credit card through our secure system</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <h3>Pick Up Your Car</h3>
+                    <p>Collect your vehicle from our convenient locations in Singapore</p>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <h3>Enjoy Your Ride</h3>
+                    <p>Return your car to any of the 4 AZoom branches when your trip ends</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Featured Cars Section -->
+    <section class="featured-cars">
+        <div class="container">
+            <h2 class="section-title">Featured Vehicles</h2>
+            <div class="cars-container">
+                <div class="carousel-track">
+                    <!-- Car 1 -->
+                    <div class="car-card">
+                        <div class="car-image">
+                            <img src="Vehicles/deepal_s07.png" alt="Deepal S07">
+                        </div>
+                        <div class="car-details">
+                            <h3>Deepal S07</h3>
+                            <p class="car-type">Premium Electric</p>
+                            <div class="car-specs">
+                                <span>Range: 475km</span>
+                                <span>0-100km/h: 7.9s</span>
+                                <span>Seating: 5</span>
+                            </div>
+                            <div class="car-price">
+                                <span class="price">S$89</span>/day
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Car 2 -->
+                    <div class="car-card">
+                        <div class="car-image">
+                            <img src="Vehicles/byd_sealion7.png" alt="BYD Sealion 7">
+                        </div>
+                        <div class="car-details">
+                            <h3>BYD Sealion 7</h3>
+                            <p class="car-type">Electric</p>
+                            <div class="car-specs">
+                                <span>Range: 405km</span>
+                                <span>0-100km/h: 4.5s</span>
+                                <span>Seating: 5</span>
+                            </div>
+                            <div class="car-price">
+                                <span class="price">S$65</span>/day
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Car 3 -->
+                    <div class="car-card">
+                        <div class="car-image">
+                            <img src="Vehicles/honda_jazz.png" alt="Honda Jazz">
+                        </div>
+                        <div class="car-details">
+                            <h3>Honda Jazz</h3>
+                            <p class="car-type">Hybrid</p>
+                            <div class="car-specs">
+                                <span>Fuel: 4.4L/100km</span>
+                                <span>0-100km/h: 2.3s</span>
+                                <span>Seating: 5</span>
+                            </div>
+                            <div class="car-price">
+                                <span class="price">S$75</span>/day
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="carousel-controls">
+                <button class="prev-btn" onclick="changeCar(-1)">❮</button>
+                <div class="dots">
+                    <span class="dot active" onclick="showCar(0)"></span>
+                    <span class="dot" onclick="showCar(1)"></span>
+                    <span class="dot" onclick="showCar(2)"></span>
+                </div>
+                <button class="next-btn" onclick="changeCar(1)">❯</button>
+            </div>
+        </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="main-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <img src="azoom-logo.png" alt="AZoom Logo">
+                    <p>Singapore's premier electric vehicle rental service</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Quick Links</h4>
+                    <ul>
+                        <li><a href="#">Home</a></li>
+                        <li><a href="our-fleet.html">Our Fleet</a></li>
+                        <li><a href="charging-stations.html">Charging Stations</a></li>
+                        <li><a href="locations.html">Locations</a></li>
+                        <li><a href="about.html">About Us</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h4>Contact Us</h4>
+                    <p>📞 +65 6123 4567</p>
+                    <p>✉️ info@azoom.com.sg</p>
+                    <p>📍 17 Eco Drive, Singapore 076852</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2025 AZoom Car Rental. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="scriptAZoom.js"></script>
+
+</body>
+
+</html>
