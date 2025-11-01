@@ -617,7 +617,7 @@ body {
     }
 
     .car-image img {
-        width: 300px;
+        width: 340px;
         height: auto;
         object-fit: cover;
         object-position: center;
@@ -651,6 +651,7 @@ body {
     }
 
 }
+
 
 
 
