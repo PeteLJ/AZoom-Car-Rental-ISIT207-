@@ -604,6 +604,7 @@ body {
 
     .car-card {
         flex-direction: column;
+        width: 100px;
     }
 
     .car-image {
@@ -616,7 +617,7 @@ body {
     }
 
     .car-image img {
-        width: 250px;
+        width: 300px;
         height: auto;
         object-fit: cover;
         object-position: center;
@@ -650,5 +651,6 @@ body {
     }
 
 }
+
 
 
